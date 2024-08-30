@@ -1,0 +1,81 @@
+<div class="container">
+<form class="mt-4" [formGroup]="form" (ngSubmit)="saveTask()">
+  <div class="mb-3">
+    <label for="taskTitleLabel" class="form-label">Título de la tarea</label>
+    <input type="text" class="form-control" formControlName="taskTitle" id="title" placeholder="Title here">
+    @if (taskTitle.errors && (taskTitle.touched || taskTitle.dirty)) {
+      <div class="row">
+        @if (taskTitle.errors["required"]) {
+          <p class="text-warning">Rellenar información</p>
+        }
+
+        @if (taskTitle.errors["minlength"]) {
+          <p class="text-warning">El título debe tener mínimo 3 caracteres.</p>
+        }
+
+        @if (taskTitle.errors["maxlength"]) {
+          <p class="text-warning">Nota: El exceso de caracteres es perjudicial para la salud</p>
+          {{taskTitle.errors | json}}
+        }
+      </div>
+    }
+    </div>
+  
+  <div class="mb-3">
+    <label for="taskDescriptionLabel" class="form-label">Descripción de la tarea</label>
+    <textarea class="form-control" formControlName="taskDescription" rows="3" placeholder="Task description here" id="description"></textarea>
+    @if (taskDescription.errors && (taskDescription.touched || taskDescription.dirty)) {
+      <div class="row">
+        @if (taskDescription.errors["required"]){
+          <p class="text-warning">Rellenar información</p>
+        }
+
+        @if (taskDescription.errors["minlength"]) {
+          <p class="text-warning">La descripción debe tener mínimo 10 caracteres.</p>
+        }
+      </div>
+    }
+  </div>
+  <div class="mb-3">
+    <div class="d-grid gap-2"><button type="submit" class="btn btn-success" [disabled]="form.invalid">Crear tarea</button>
+      {{form.invalid | json}}
+    </div>
+  </div>
+</form>
+</div>
+<hr>
+<!-- AQUI VA EL ARRAY DE LA TARJETA -->
+
+<div class="mt-4">
+  @if (tasksArray.length == 0) {
+    <div class="d-flex justify-content-center">
+    <div class="card mt-4 card border-danger mb-3" style="width: 18rem;">
+      <app-spinners></app-spinners>
+    </div>
+  </div>
+  }@else {
+    <div class="container text-center">
+      <div class="row row-cols-2">
+        @for (tasksArray of tasksArray; track $index) {
+          <div class="col mt-2">
+            @if (tasksArray.taskStatus == "false") {
+              <div class="d-flex justify-content-center mt-2">
+                <app-card [taskIDCard]="$index" [taskTitleCard]="tasksArray.taskTitle" [taskDescriptionCard]="tasksArray.taskDescription" [taskStatusCard]="tasksArray.taskStatus" [taskNumberCard]= "$index + 1" (doClick)="changeStatusTask($event)"></app-card>
+              </div>
+            }
+
+            @else {
+              <div class="d-flex justify-content-center mt-2">
+                <app-card [taskTitleCard]="tasksArray.taskTitle" [taskDescriptionCard]="tasksArray.taskDescription" [taskStatusCard]="tasksArray.taskStatus" [taskNumberCard]= "$index + 1"></app-card>
+              </div>
+            }
+          </div>
+        }    
+      </div>
+    </div>  
+  } 
+</div>
+
+
+
+<router-outlet />

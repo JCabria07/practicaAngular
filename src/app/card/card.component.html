@@ -1,0 +1,22 @@
+
+@if (taskStatusCard == "false") {
+    <div class="card border-danger mb-10" style="max-width: 18rem;">
+        <div class="card-header">Task #{{taskNumberCard}}</div>
+        <div class="card-body">
+            <h5 class="card-title">{{taskTitleCard}}</h5>
+            <p class="card-text">{{taskDescriptionCard}}</p>
+        </div>
+        <button type="button" class="btn btn-outline-success" (click)="getTaskNumber()">Realizado</button>
+    </div>    
+}
+
+@else if (taskStatusCard == "true") {
+    <div class="card border-success mb-10" style="max-width: 18rem;">
+        <div class="card-header bg-success">Task #{{taskNumberCard}}</div>
+        <div class="card-body">
+            <h5 class="card-title">{{taskTitleCard}}</h5>
+            <p class="card-text">{{taskDescriptionCard}}</p>
+        </div>
+        <p class="h2 text-success">Tarea completada</p>
+    </div>    
+}

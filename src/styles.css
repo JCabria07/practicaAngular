@@ -1,0 +1,6 @@
+/* You can add global styles to this file, and also import other style files */
+
+body{
+    font-family: 'Comic Sans MS', Times, serif;
+    cursor: url('../public/image.png'), auto;
+}
